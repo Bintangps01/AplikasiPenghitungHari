@@ -1,3 +1,8 @@
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -8,13 +13,221 @@
  * @author MyBook Z Series
  */
 public class PenghitungHariFrame extends javax.swing.JFrame {
-
+    
+    // Array untuk memetakan nama hari dalam bahasa Indonesia
+    private static final String[] NAMA_HARI_INDO = {
+        "Minggu", // SUNDAY
+        "Senin",  // MONDAY
+        "Selasa", // TUESDAY
+        "Rabu",   // WEDNESDAY
+        "Kamis",  // THURSDAY
+        "Jumat",  // FRIDAY
+        "Sabtu"   // SATURDAY
+    };
     /**
      * Creates new form PenghitungHariFrame
      */
     public PenghitungHariFrame() {
         initComponents();
+        
+        updateFieldsFromCalendarSatu();
+        updateFieldsFromCalendarDua();
+        
+        // Listener untuk buttonHitung
+        buttonHitung.addActionListener(e -> hitungHari());
+        
+        // Menambahkan listener untuk jCalendarSatu
+        jCalendarSatu.getYearChooser().addPropertyChangeListener(evt -> {
+            if ("year".equals(evt.getPropertyName())) {
+                updateFieldsFromCalendarSatu();
+            }
+        });
+
+        jCalendarSatu.getMonthChooser().addPropertyChangeListener(evt -> {
+            if ("month".equals(evt.getPropertyName())) {
+                updateFieldsFromCalendarSatu();
+            }
+        });
+
+        // Menambahkan listener untuk tahun dan bulan di jCalendarDua
+        jCalendarDua.getYearChooser().addPropertyChangeListener(evt -> {
+            if ("year".equals(evt.getPropertyName())) {
+                updateFieldsFromCalendarDua();
+            }
+        });
+
+        jCalendarDua.getMonthChooser().addPropertyChangeListener(evt -> {
+            if ("month".equals(evt.getPropertyName())) {
+                updateFieldsFromCalendarDua();
+            }
+        });
+        
+        // Listener untuk comboBulanSatu (bulan pertama)
+        comboBulanSatu.addActionListener(e -> updateCalendarFromComboBulanSatu());
+
+        // Listener untuk comboBulanDua (bulan kedua)
+        comboBulanDua.addActionListener(e -> updateCalendarFromComboBulanDua());
+
+        // Listener untuk spinnerTahunSatu (tahun pertama)
+        spinnerTahunSatu.addChangeListener(e -> updateCalendarFromSpinnerTahunSatu());
+
+        // Listener untuk spinnerTahunDua (tahun kedua)
+        spinnerTahunDua.addChangeListener(e -> updateCalendarFromSpinnerTahunDua());
     }
+    
+    private void hitungHari() {
+        // Ambil tahun, bulan, dan tanggal dari jCalendarSatu
+        int tahunPertama = jCalendarSatu.getYearChooser().getYear();
+        int bulanPertama = jCalendarSatu.getMonthChooser().getMonth() + 1; // getMonth() dimulai dari 0
+        int tanggalPertama = jCalendarSatu.getDayChooser().getDay();
+
+        // Ambil tahun, bulan, dan tanggal dari jCalendarDua
+        int tahunKedua = jCalendarDua.getYearChooser().getYear();
+        int bulanKedua = jCalendarDua.getMonthChooser().getMonth() + 1; // getMonth() dimulai dari 0
+        int tanggalKedua = jCalendarDua.getDayChooser().getDay();
+
+        // Membuat objek LocalDate untuk tanggal yang dipilih di kedua kalender
+        LocalDate tanggalYangDipilihBulanSatu = LocalDate.of(tahunPertama, bulanPertama, tanggalPertama);
+        LocalDate tanggalYangDipilihBulanDua = LocalDate.of(tahunKedua, bulanKedua, tanggalKedua);
+
+        // Hitung tanggal pertama dan terakhir bulan pertama
+        LocalDate tanggalPertamaBulanSatu = LocalDate.of(tahunPertama, bulanPertama, 1);
+        YearMonth yearMonthSatu = YearMonth.of(tahunPertama, bulanPertama);
+        LocalDate tanggalTerakhirBulanSatu = yearMonthSatu.atEndOfMonth();
+
+        // Hitung tanggal pertama dan terakhir bulan kedua
+        LocalDate tanggalPertamaBulanDua = LocalDate.of(tahunKedua, bulanKedua, 1);
+        YearMonth yearMonthDua = YearMonth.of(tahunKedua, bulanKedua);
+        LocalDate tanggalTerakhirBulanDua = yearMonthDua.atEndOfMonth();
+
+        // Nama hari pertama dan terakhir untuk bulan pertama
+        DayOfWeek hariPertamaBulanSatu = tanggalPertamaBulanSatu.getDayOfWeek();
+        DayOfWeek hariTerakhirBulanSatu = tanggalTerakhirBulanSatu.getDayOfWeek();
+
+        // Nama hari pertama dan terakhir untuk bulan kedua
+        DayOfWeek hariPertamaBulanDua = tanggalPertamaBulanDua.getDayOfWeek();
+        DayOfWeek hariTerakhirBulanDua = tanggalTerakhirBulanDua.getDayOfWeek();
+
+        // Menambahkan 1 untuk menyesuaikan hari, agar Senin menjadi index 0
+        String namaHariPertamaBulanSatu = NAMA_HARI_INDO[(hariPertamaBulanSatu.ordinal() + 1) % 7];
+        String namaHariTerakhirBulanSatu = NAMA_HARI_INDO[(hariTerakhirBulanSatu.ordinal() + 1) % 7];
+        String namaHariPertamaBulanDua = NAMA_HARI_INDO[(hariPertamaBulanDua.ordinal() + 1) % 7];
+        String namaHariTerakhirBulanDua = NAMA_HARI_INDO[(hariTerakhirBulanDua.ordinal() + 1) % 7];
+
+        // Masukkan hasil ke JTextField
+        hasilHariPertamaBulanSatu.setText(namaHariPertamaBulanSatu);
+        hasilHariTerakhirBulanSatu.setText(namaHariTerakhirBulanSatu);
+        hasilHariPertamaBulanDua.setText(namaHariPertamaBulanDua);
+        hasilHariTerakhirBulanDua.setText(namaHariTerakhirBulanDua);
+
+        // Hitung jumlah hari pada bulan pertama dan kedua
+        int jumlahHariPertama = yearMonthSatu.lengthOfMonth();
+        int jumlahHariKedua = yearMonthDua.lengthOfMonth();
+
+        // Masukkan jumlah hari ke JTextField
+        hasilJumlahTanggalPertama.setText(String.valueOf(jumlahHariPertama));
+        hasilJumlahTanggalKedua.setText(String.valueOf(jumlahHariKedua));
+
+        // Tentukan apakah tahun pertama dan kedua adalah tahun kabisat
+        String tahunKabisatPertama = isLeapYear(tahunPertama) ? "Ya" : "Tidak";
+        String tahunKabisatKedua = isLeapYear(tahunKedua) ? "Ya" : "Tidak";
+
+        // Masukkan hasil kabisat ke JTextField
+        hasilTahunKabisatPertama.setText(tahunKabisatPertama);
+        hasilTahunKabisatKedua.setText(tahunKabisatKedua);
+
+        // Hitung selisih hari antara tanggal pertama yang dipilih di kalender pertama dan kalender kedua
+        long selisihHari = ChronoUnit.DAYS.between(tanggalYangDipilihBulanSatu, tanggalYangDipilihBulanDua);
+
+        // Masukkan hasil selisih hari ke JTextField
+        hasilSelisih.setText(String.valueOf(selisihHari));
+    }
+
+    // Fungsi untuk memeriksa apakah tahun kabisat
+    private boolean isLeapYear(int year) {
+        return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+    }
+    
+    private void updateFieldsFromCalendarSatu() {
+        // Mendapatkan tanggal yang dipilih dari jCalendarSatu
+        java.util.Date selectedDate = jCalendarSatu.getDate();
+
+        // Menggunakan Calendar untuk ekstrak tahun, bulan, dan tanggal
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        // Mendapatkan tahun dan bulan
+        int year = calendar.get(java.util.Calendar.YEAR);
+        int month = calendar.get(java.util.Calendar.MONTH); // Bulan mulai dari 0 (Januari = 0)
+        int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+
+        // Mengatur bulan pada comboBulanSatu (karena bulan dimulai dari 0)
+        comboBulanSatu.setSelectedIndex(month);
+
+        // Mengatur tahun pada spinnerTahunSatu
+        spinnerTahunSatu.setValue(year);
+    }
+
+    private void updateFieldsFromCalendarDua() {
+        // Mendapatkan tanggal yang dipilih dari jCalendarDua
+        java.util.Date selectedDate = jCalendarDua.getDate();
+
+        // Menggunakan Calendar untuk ekstrak tahun, bulan, dan tanggal
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        // Mendapatkan tahun dan bulan
+        int year = calendar.get(java.util.Calendar.YEAR);
+        int month = calendar.get(java.util.Calendar.MONTH); // Bulan mulai dari 0 (Januari = 0)
+        int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+
+        // Mengatur bulan pada comboBulanDua (karena bulan dimulai dari 0)
+        comboBulanDua.setSelectedIndex(month);
+
+        // Mengatur tahun pada spinnerTahunDua
+        spinnerTahunDua.setValue(year);
+    }
+    
+    private void updateCalendarFromComboBulanSatu() {
+        // Mendapatkan bulan dan tahun dari comboBulanSatu dan spinnerTahunSatu
+        int selectedMonth = comboBulanSatu.getSelectedIndex();  // Bulan mulai dari 0 (Januari = 0)
+        int selectedYear = (int) spinnerTahunSatu.getValue();
+
+        // Memperbarui bulan dan tahun pada jCalendarSatu
+        jCalendarSatu.getMonthChooser().setMonth(selectedMonth);
+        jCalendarSatu.getYearChooser().setYear(selectedYear);
+    }
+
+    private void updateCalendarFromComboBulanDua() {
+        // Mendapatkan bulan dan tahun dari comboBulanDua dan spinnerTahunDua
+        int selectedMonth = comboBulanDua.getSelectedIndex();  // Bulan mulai dari 0 (Januari = 0)
+        int selectedYear = (int) spinnerTahunDua.getValue();
+
+        // Memperbarui bulan dan tahun pada jCalendarDua
+        jCalendarDua.getMonthChooser().setMonth(selectedMonth);
+        jCalendarDua.getYearChooser().setYear(selectedYear);
+    }
+
+    private void updateCalendarFromSpinnerTahunSatu() {
+        // Mendapatkan bulan yang dipilih di comboBulanSatu dan tahun dari spinnerTahunSatu
+        int selectedMonth = comboBulanSatu.getSelectedIndex();  // Bulan mulai dari 0 (Januari = 0)
+        int selectedYear = (int) spinnerTahunSatu.getValue();
+
+        // Memperbarui tahun dan bulan pada jCalendarSatu
+        jCalendarSatu.getMonthChooser().setMonth(selectedMonth);
+        jCalendarSatu.getYearChooser().setYear(selectedYear);
+    }
+
+    private void updateCalendarFromSpinnerTahunDua() {
+        // Mendapatkan bulan yang dipilih di comboBulanDua dan tahun dari spinnerTahunDua
+        int selectedMonth = comboBulanDua.getSelectedIndex();  // Bulan mulai dari 0 (Januari = 0)
+        int selectedYear = (int) spinnerTahunDua.getValue();
+
+        // Memperbarui tahun dan bulan pada jCalendarDua
+        jCalendarDua.getMonthChooser().setMonth(selectedMonth);
+        jCalendarDua.getYearChooser().setYear(selectedYear);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,8 +242,8 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         panelUtama = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         buttonHitung = new javax.swing.JButton();
-        jCalendarSatu = new com.toedter.calendar.JCalendar();
         jCalendarDua = new com.toedter.calendar.JCalendar();
+        jCalendarSatu = new com.toedter.calendar.JCalendar();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         panelHasil = new javax.swing.JPanel();
@@ -42,12 +255,16 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         hasilSelisih = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        hasilHariPertama = new javax.swing.JTextField();
-        hasilHariKedua = new javax.swing.JTextField();
+        hasilHariPertamaBulanSatu = new javax.swing.JTextField();
+        hasilHariPertamaBulanDua = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         hasilJumlahTanggalKedua = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         hasilTahunKabisatPertama = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        hasilHariTerakhirBulanSatu = new javax.swing.JTextField();
+        hasilHariTerakhirBulanDua = new javax.swing.JTextField();
         panelPertama = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         comboBulanSatu = new javax.swing.JComboBox<>();
@@ -61,6 +278,7 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        panelUtama.setBackground(new java.awt.Color(255, 204, 153));
         panelUtama.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         panelUtama.setLayout(new java.awt.GridBagLayout());
 
@@ -81,23 +299,23 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 18;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         panelUtama.add(buttonHitung, gridBagConstraints);
+
+        jCalendarDua.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(0, 14, 0, 14);
-        panelUtama.add(jCalendarSatu, gridBagConstraints);
+        panelUtama.add(jCalendarDua, gridBagConstraints);
 
-        jCalendarDua.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jCalendarDuaPropertyChange(evt);
-            }
-        });
+        jCalendarSatu.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jCalendarSatu.setDate(new java.util.Date(1705231491000L));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(0, 14, 0, 14);
-        panelUtama.add(jCalendarDua, gridBagConstraints);
+        panelUtama.add(jCalendarSatu, gridBagConstraints);
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Tanggal Pertama");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -105,6 +323,7 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(14, 14, 8, 14);
         panelUtama.add(jLabel4, gridBagConstraints);
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Tanggal Kedua");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -112,77 +331,79 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(14, 14, 8, 14);
         panelUtama.add(jLabel5, gridBagConstraints);
 
+        panelHasil.setBackground(new java.awt.Color(255, 204, 153));
         panelHasil.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hasil", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         panelHasil.setLayout(new java.awt.GridBagLayout());
 
-        jLabel6.setText("Jumlah Hari Tanggal Pertama :");
+        jLabel6.setText("Jumlah Hari Bulan Pertama :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         panelHasil.add(jLabel6, gridBagConstraints);
 
-        jLabel7.setText("Tahun Kabisat Tanggal Pertama :");
+        jLabel7.setText("Kabisat Tahun Kedua :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         panelHasil.add(jLabel7, gridBagConstraints);
-
-        hasilJumlahTanggalPertama.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hasilJumlahTanggalPertamaActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         panelHasil.add(hasilJumlahTanggalPertama, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         panelHasil.add(hasilTahunKabisatKedua, gridBagConstraints);
 
         jLabel8.setText("Jumlah Selisih Hari :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         panelHasil.add(jLabel8, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         panelHasil.add(hasilSelisih, gridBagConstraints);
 
-        jLabel9.setText("Hari Tanggal Pertama :");
+        jLabel9.setText("Hari Pertama Bulan Pertama :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         panelHasil.add(jLabel9, gridBagConstraints);
 
-        jLabel10.setText("Hari Tanggal Kedua :");
+        jLabel10.setText("Hari Pertama Bulan Kedua :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         panelHasil.add(jLabel10, gridBagConstraints);
+
+        hasilHariPertamaBulanSatu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hasilHariPertamaBulanSatuActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        panelHasil.add(hasilHariPertama, gridBagConstraints);
+        panelHasil.add(hasilHariPertamaBulanSatu, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        panelHasil.add(hasilHariKedua, gridBagConstraints);
+        panelHasil.add(hasilHariPertamaBulanDua, gridBagConstraints);
 
-        jLabel11.setText("Jumlah Hari Tanggal Kedua :");
+        jLabel11.setText("Jumlah Hari Bulan Kedua :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -191,11 +412,11 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         panelHasil.add(hasilJumlahTanggalKedua, gridBagConstraints);
 
-        jLabel12.setText("Tahun Kabisat Tanggal Kedua :");
+        jLabel12.setText("Kabisat Tahun Pertama :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -204,9 +425,35 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         panelHasil.add(hasilTahunKabisatPertama, gridBagConstraints);
+
+        jLabel15.setText("Hari Terakhir Bulan Pertama :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel15, gridBagConstraints);
+
+        jLabel16.setText("Hari Terakhir Bulan Kedua :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel16, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilHariTerakhirBulanSatu, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilHariTerakhirBulanDua, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -227,7 +474,7 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelPertama.add(jLabel2, gridBagConstraints);
 
-        comboBulanSatu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
+        comboBulanSatu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Desember" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -240,6 +487,8 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelPertama.add(jLabel3, gridBagConstraints);
+
+        spinnerTahunSatu.setEditor(new javax.swing.JSpinner.NumberEditor(spinnerTahunSatu, "0000"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -263,7 +512,7 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelKedua.add(jLabel13, gridBagConstraints);
 
-        comboBulanDua.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
+        comboBulanDua.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Desember" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -276,6 +525,9 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelKedua.add(jLabel14, gridBagConstraints);
+
+        spinnerTahunDua.setModel(new javax.swing.SpinnerNumberModel());
+        spinnerTahunDua.setEditor(new javax.swing.JSpinner.NumberEditor(spinnerTahunDua, "0000"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -293,14 +545,10 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void hasilJumlahTanggalPertamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hasilJumlahTanggalPertamaActionPerformed
+    private void hasilHariPertamaBulanSatuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hasilHariPertamaBulanSatuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_hasilJumlahTanggalPertamaActionPerformed
-
-    private void jCalendarDuaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarDuaPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCalendarDuaPropertyChange
-
+    }//GEN-LAST:event_hasilHariPertamaBulanSatuActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -327,7 +575,6 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PenghitungHariFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -340,8 +587,10 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
     private javax.swing.JButton buttonHitung;
     private javax.swing.JComboBox<String> comboBulanDua;
     private javax.swing.JComboBox<String> comboBulanSatu;
-    private javax.swing.JTextField hasilHariKedua;
-    private javax.swing.JTextField hasilHariPertama;
+    private javax.swing.JTextField hasilHariPertamaBulanDua;
+    private javax.swing.JTextField hasilHariPertamaBulanSatu;
+    private javax.swing.JTextField hasilHariTerakhirBulanDua;
+    private javax.swing.JTextField hasilHariTerakhirBulanSatu;
     private javax.swing.JTextField hasilJumlahTanggalKedua;
     private javax.swing.JTextField hasilJumlahTanggalPertama;
     private javax.swing.JTextField hasilSelisih;
@@ -355,6 +604,8 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
