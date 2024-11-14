@@ -24,22 +24,282 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        panelUtama = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        buttonHitung = new javax.swing.JButton();
+        jCalendarSatu = new com.toedter.calendar.JCalendar();
+        jCalendarDua = new com.toedter.calendar.JCalendar();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        panelHasil = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        hasilJumlahTanggalPertama = new javax.swing.JTextField();
+        hasilTahunKabisatKedua = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        hasilSelisih = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        hasilHariPertama = new javax.swing.JTextField();
+        hasilHariKedua = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        hasilJumlahTanggalKedua = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        hasilTahunKabisatPertama = new javax.swing.JTextField();
+        panelPertama = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        comboBulanSatu = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        spinnerTahunSatu = new javax.swing.JSpinner();
+        panelKedua = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        comboBulanDua = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        spinnerTahunDua = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        panelUtama.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelUtama.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Aplikasi Penghitung Hari");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 17, 0);
+        panelUtama.add(jLabel1, gridBagConstraints);
+
+        buttonHitung.setText("Hitung");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 18;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        panelUtama.add(buttonHitung, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 14, 0, 14);
+        panelUtama.add(jCalendarSatu, gridBagConstraints);
+
+        jCalendarDua.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendarDuaPropertyChange(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 14, 0, 14);
+        panelUtama.add(jCalendarDua, gridBagConstraints);
+
+        jLabel4.setText("Tanggal Pertama");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(14, 14, 8, 14);
+        panelUtama.add(jLabel4, gridBagConstraints);
+
+        jLabel5.setText("Tanggal Kedua");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(14, 14, 8, 14);
+        panelUtama.add(jLabel5, gridBagConstraints);
+
+        panelHasil.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hasil", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        panelHasil.setLayout(new java.awt.GridBagLayout());
+
+        jLabel6.setText("Jumlah Hari Tanggal Pertama :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel6, gridBagConstraints);
+
+        jLabel7.setText("Tahun Kabisat Tanggal Pertama :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel7, gridBagConstraints);
+
+        hasilJumlahTanggalPertama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hasilJumlahTanggalPertamaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilJumlahTanggalPertama, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilTahunKabisatKedua, gridBagConstraints);
+
+        jLabel8.setText("Jumlah Selisih Hari :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel8, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilSelisih, gridBagConstraints);
+
+        jLabel9.setText("Hari Tanggal Pertama :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel9, gridBagConstraints);
+
+        jLabel10.setText("Hari Tanggal Kedua :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel10, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilHariPertama, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilHariKedua, gridBagConstraints);
+
+        jLabel11.setText("Jumlah Hari Tanggal Kedua :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel11, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilJumlahTanggalKedua, gridBagConstraints);
+
+        jLabel12.setText("Tahun Kabisat Tanggal Kedua :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelHasil.add(jLabel12, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelHasil.add(hasilTahunKabisatPertama, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        panelUtama.add(panelHasil, gridBagConstraints);
+
+        panelPertama.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelPertama.setLayout(new java.awt.GridBagLayout());
+
+        jLabel2.setText("Pilih Bulan Pertama");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        panelPertama.add(jLabel2, gridBagConstraints);
+
+        comboBulanSatu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        panelPertama.add(comboBulanSatu, gridBagConstraints);
+
+        jLabel3.setText("Pilih Tahun Pertama");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        panelPertama.add(jLabel3, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 55;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        panelPertama.add(spinnerTahunSatu, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        panelUtama.add(panelPertama, gridBagConstraints);
+
+        panelKedua.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelKedua.setLayout(new java.awt.GridBagLayout());
+
+        jLabel13.setText("Pilih Bulan Kedua");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        panelKedua.add(jLabel13, gridBagConstraints);
+
+        comboBulanDua.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        panelKedua.add(comboBulanDua, gridBagConstraints);
+
+        jLabel14.setText("Pilih Tahun Kedua");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        panelKedua.add(jLabel14, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 55;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        panelKedua.add(spinnerTahunDua, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        panelUtama.add(panelKedua, gridBagConstraints);
+
+        getContentPane().add(panelUtama, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void hasilJumlahTanggalPertamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hasilJumlahTanggalPertamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hasilJumlahTanggalPertamaActionPerformed
+
+    private void jCalendarDuaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarDuaPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCalendarDuaPropertyChange
 
     /**
      * @param args the command line arguments
@@ -77,5 +337,37 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonHitung;
+    private javax.swing.JComboBox<String> comboBulanDua;
+    private javax.swing.JComboBox<String> comboBulanSatu;
+    private javax.swing.JTextField hasilHariKedua;
+    private javax.swing.JTextField hasilHariPertama;
+    private javax.swing.JTextField hasilJumlahTanggalKedua;
+    private javax.swing.JTextField hasilJumlahTanggalPertama;
+    private javax.swing.JTextField hasilSelisih;
+    private javax.swing.JTextField hasilTahunKabisatKedua;
+    private javax.swing.JTextField hasilTahunKabisatPertama;
+    private com.toedter.calendar.JCalendar jCalendarDua;
+    private com.toedter.calendar.JCalendar jCalendarSatu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel panelHasil;
+    private javax.swing.JPanel panelKedua;
+    private javax.swing.JPanel panelPertama;
+    private javax.swing.JPanel panelUtama;
+    private javax.swing.JSpinner spinnerTahunDua;
+    private javax.swing.JSpinner spinnerTahunSatu;
     // End of variables declaration//GEN-END:variables
 }
