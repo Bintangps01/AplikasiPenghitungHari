@@ -4,7 +4,7 @@
 Sebuah aplikasi yang dapat digunakan untuk menghitung jumlah hari, tahun kabisat, dan selisih antara dua tanggal, yang ditujukan untuk menyelesaikan Tugas PBO ke-4.
 
 #### Source Code PenghitungHariFrame.java
-```
+```java
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -637,6 +637,10 @@ public class PenghitungHariFrame extends javax.swing.JFrame {
 ## Fitur Tambahan (Variasi)
 - Menampilkan hari pertama dan hari terakhir pada bulan pertama dan kedua
 - Menghitung selisih antara tanggal pertama dan tanggal kedua
+
+## Screenshot
+![{1F8F67EE-79F6-4953-9D8F-5C38BF61D175}](https://github.com/user-attachments/assets/b5c3e77e-612b-4d9e-b172-0fa9e55437c5)
+
 ## Referensi
 
  - [Modul PBO2 Tugas 4](https://drive.google.com/file/d/117U7vgoWA98vy3oesXkIiRlZkyVaPFoO/view)
